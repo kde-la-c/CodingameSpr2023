@@ -53,7 +53,6 @@ int main()
 		oppBases.push_back(oppBaseIndex);
 	}
 
-	int current;
 	// game loop
 	while (1) {
 		string actions = "WAIT";
@@ -71,27 +70,17 @@ int main()
 		//TODO: choose actions to perform and add them into actions
 		// To debug: cerr << "Debug messages..." << endl;
 		// WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
-		// vector<int> current;
+		vector<int> current;
 		int test = 0;
 		for (int i = 0; i < numberOfCells; i++)
 			if (cells[i].resources > test)
 				test = cells[i].resources;
-		cerr << "Test" << test << endl;
-		for (int i = 0; i < numberOfCells && !cells[current].resources; i++)
-		{
-			cerr << "cells[" << i << "].resources :" << cells[i].resources << endl;
+		for (int i = 0; i < numberOfCells; i++)
 			if (cells[i].resources == test)
-			{
-				current = i;
-				break;
-			}
-		}
-
-		// cerr << "Current :" << current << " " << cells[current] << endl;
+				current.push_back(cells[i].index);
 		
-		cout << "LINE " << myBases[0] << ' ' << current << " 100" << endl;
-		
-		// cout << "LINE " << myBases[0] << ' ' << cells[current[0]].index << " 100" << endl;
+		cerr << "Debug messages..." << current.max_size() << endl;
+		cout << "LINE " << myBases[0] << ' ' << cells[current[0]].index << " 100" << endl;
 		
 		
 		/* if (actions.length() == 0){
