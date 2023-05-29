@@ -1,108 +1,61 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+class cells
+{
+    int type;
+    int initialResources;
+    int neigh0;
+    int neigh1;
+    int neigh2;
+    int neigh3;
+    int neigh4;
+    int neigh5;
+}
 
 /**
  * Auto-generated code below aims at helping you parse
  * the standard input according to the problem statement.
  **/
+class Player {
 
-typedef struct	s_cell
-{
-	int	type;
-	int initial_resources;
-	int neigh_0;
-	int neigh_1;
-	int neigh_2;
-	int neigh_3;
-	int neigh_4;
-	int neigh_5;
-	int distance;
-	int resources; 
-	int my_ants;
-	int opp_ants;
-}				t_cell;
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        cells cells[] = new cells;
+        int numberOfCells = in.nextInt(); // amount of hexagonal cells in this map
+        for (int i = 0; i < numberOfCells; i++) {
+            cells[i].type = in.nextInt(); // 0 for empty, 1 for eggs, 2 for crystal
+            cells[i].initialResources = in.nextInt(); // the initial amount of eggs/crystals on this cell
+            cells[i].neigh0 = in.nextInt(); // the index of the neighbouring cell for each direction
+            cells[i].neigh1 = in.nextInt();
+            cells[i].neigh2 = in.nextInt();
+            cells[i].neigh3 = in.nextInt();
+            cells[i].neigh4 = in.nextInt();
+            cells[i].neigh5 = in.nextInt();
+        }
+        int numberOfBases = in.nextInt();
+        for (int i = 0; i < numberOfBases; i++) {
+            int myBaseIndex = in.nextInt();
+        }
+        for (int i = 0; i < numberOfBases; i++) {
+            int oppBaseIndex = in.nextInt();
+        }
 
-int main()
-{
-	int tick = 0;
-	int number_of_cells;
-	int number_of_ressource_cells = 0;
-	scanf("%d", &number_of_cells);
-	t_cell	cells[number_of_cells];
-	int		crystals[10][2];
-	for (int i = 0; i < number_of_cells; i++) {
-		scanf("%d%d%d%d%d%d%d%d", 
-			&cells[i].type, 
-			&cells[i].initial_resources, 
-			&cells[i].neigh_0, 
-			&cells[i].neigh_1, 
-			&cells[i].neigh_2, 
-			&cells[i].neigh_3, 
-			&cells[i].neigh_4, 
-			&cells[i].neigh_5
-		);
-		if (cells[i].type == 2)
-		{
-			crystals[number_of_ressource_cells][0] = i;
-			crystals[number_of_ressource_cells++][1] = cells[i].initial_resources;
-		}
-	}
+        // game loop
+        while (true) {
+            for (int i = 0; i < numberOfCells; i++) {
+                int resources = in.nextInt(); // the current amount of eggs/crystals on this cell
+                int myAnts = in.nextInt(); // the amount of your ants on this cell
+                int oppAnts = in.nextInt(); // the amount of opponent ants on this cell
+            }
+
+            // Write an action using System.out.println()
+            // To debug: System.err.println("Debug messages...");
 
 
-
-	int number_of_bases;
-	scanf("%d", &number_of_bases);
-
-	int my_base_index;
-	scanf("%d", &my_base_index);
-
-	int opp_base_index;
-	scanf("%d", &opp_base_index);
-
-	fprintf(stderr, "nbress :%d\n", number_of_ressource_cells);
-
-	// game loop
-	while (1) {
-		for (int i = 0; i < number_of_cells; i++) {
-			scanf("%d%d%d", 
-				&cells[i].resources, 
-				&cells[i].my_ants, 
-				&cells[i].opp_ants
-			);
-		}
-
-			int targ;
-		int	tmp = 1;
-		for (int i = 0; i < number_of_ressource_cells; i++)
-		{
-			if (crystals[i][1] > tmp)
-			{
-				tmp = crystals[i][1];
-				targ = i;
-			}
-		}
-		/* fprintf(stderr, "%d %d %d %d %d %d %d %d %d %d %d \n", 
-			cells[0].type, 
-			cells[0].initial_resources, 
-			cells[0].neigh_0, 
-			cells[0].neigh_1, 
-			cells[0].neigh_2, 
-			cells[0].neigh_3, 
-			cells[0].neigh_4, 
-			cells[0].neigh_5, 
-			cells[0].resources, 
-			cells[0].my_ants, 
-			cells[0].opp_ants
-		); */
-
-		printf("LINE %d %d 100\n", my_base_index, targ);
-
-		// printf("WAIT\n");
-
-		tick++;
-	}
-
-	return 0;
+            // WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
+            System.out.println("WAIT");
+        }
+    }
 }

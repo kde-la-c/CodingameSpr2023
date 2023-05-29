@@ -24,6 +24,15 @@ typedef struct	s_cell
 	int opp_ants;
 }				t_cell;
 
+int isempty(int **crystals, int arr[], int size)
+{
+	int i = 0;
+	while (i < size)
+		if (crystals[arr[i++]][1])
+			return 0;
+	return 1;
+}
+
 int main()
 {
 	int tick = 0;
@@ -50,8 +59,6 @@ int main()
 		}
 	}
 
-
-
 	int number_of_bases;
 	scanf("%d", &number_of_bases);
 
@@ -63,6 +70,7 @@ int main()
 
 	fprintf(stderr, "nbress :%d\n", number_of_ressource_cells);
 
+	int current[10];
 	// game loop
 	while (1) {
 		for (int i = 0; i < number_of_cells; i++) {
@@ -73,31 +81,30 @@ int main()
 			);
 		}
 
-			int targ;
+		int targ;
 		int	tmp = 1;
-		for (int i = 0; i < number_of_ressource_cells; i++)
+		if (isempty(crystals, current, 10))
 		{
-			if (crystals[i][1] > tmp)
+			for (int i = 0; i < number_of_ressource_cells; i++)
 			{
-				tmp = crystals[i][1];
-				targ = i;
+				if (crystals[i][1] > tmp)
+				{
+					tmp = crystals[i][1];
+					targ = i;
+				}
+			}
+			tmp = 0;
+			for (int i = 0; i < number_of_ressource_cells; i++)
+			{
+				if (crystals[i][1] == targ)
+					current[tmp++] = crystals[i][0];
 			}
 		}
-		/* fprintf(stderr, "%d %d %d %d %d %d %d %d %d %d %d \n", 
-			cells[0].type, 
-			cells[0].initial_resources, 
-			cells[0].neigh_0, 
-			cells[0].neigh_1, 
-			cells[0].neigh_2, 
-			cells[0].neigh_3, 
-			cells[0].neigh_4, 
-			cells[0].neigh_5, 
-			cells[0].resources, 
-			cells[0].my_ants, 
-			cells[0].opp_ants
-		); */
-
-		printf("LINE %d %d 100\n", my_base_index, targ);
+		for (int i = 0; i < tmp; i++)
+		{
+			printf("LINE %d %d %d\n", my_base_index, current[i], 100 / (tmp - 1));
+		}
+		
 
 		// printf("WAIT\n");
 
