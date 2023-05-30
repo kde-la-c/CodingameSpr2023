@@ -23,7 +23,7 @@ class Cell {
 int main()
 {
 	vector<Cell> cells;
-	vector<int> myBases, oppBases;
+	int myBase, oppBases;
 	int numberOfCells; // amount of hexagonal cells in this map
 	cin >> numberOfCells; cin.ignore();
 	for (int i = 0; i < numberOfCells; i++) {
@@ -45,15 +45,18 @@ int main()
 	for (int i = 0; i < numberOfBases; i++) {
 		int myBaseIndex;
 		cin >> myBaseIndex; cin.ignore();
-		myBases.push_back(myBaseIndex);
+		myBase = myBaseIndex;
+		// myBases.push_back(myBaseIndex);
 	}
 	for (int i = 0; i < numberOfBases; i++) {
 		int oppBaseIndex;
 		cin >> oppBaseIndex; cin.ignore();
-		oppBases.push_back(oppBaseIndex);
+		oppBases = oppBaseIndex;
+		// oppBases.push_back(oppBaseIndex);
 	}
 
 	int current;
+	int tick = 0;
 	// game loop
 	while (1) {
 		string actions = "WAIT";
@@ -68,22 +71,32 @@ int main()
 			cells[i].oppAnts = oppAnts;
 		}
 
-		//TODO: choose actions to perform and add them into actions
-		// To debug: cerr << "Debug messages..." << endl;
-		// WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
-		// vector<int> current;
-		int test = 0;
+		vector<int> eggs, crystals;
 		for (int i = 0; i < numberOfCells; i++)
-			if (cells[i].resources > test)
-				test = cells[i].resources;
-		for (int i = 0; i < numberOfCells && !cells[current].resources; i++)
-			if (cells[i].resources == test)
-				current = i;
+		{
+			if (cells[i].cellType == 1)
+			{
+				cerr << "AAAAAA" << endl;
+				eggs.push_back(i);
+			}
+			else if (cells[i].cellType == 2)
+			{
+				cerr << "BBBBBB" << endl;
+				crystals.push_back(i);
+			}
+		}
+		for (int i = 0; i < eggs.size(); i++)
+		{
+			if (cells[eggs[i]].resources)
+				cout << "LINE " << myBase << ' ' << eggs[i] << ' ' << 100 / eggs.size() << ";";
+		}
+		
 
+		// cout << "LINE " << myBase << ' ' << current << " 100";
 		
-		cout << "LINE " << myBases[0] << ' ' << current << " 100" << endl;
-		
+		cout << endl;
 		// cout << "LINE " << myBases[0] << ' ' << cells[current[0]].index << " 100" << endl;
 		// cerr << "Current :" << current << " " << cells[current] << endl;
+		tick++;
 	}
 }

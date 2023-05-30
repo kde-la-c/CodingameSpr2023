@@ -68,6 +68,10 @@ int main()
 			cells[i].oppAnts = oppAnts;
 		}
 
+		//TODO: choose actions to perform and add them into actions
+		// To debug: cerr << "Debug messages..." << endl;
+		// WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
+		// vector<int> current;
 		int test = 0;
 		for (int i = 0; i < numberOfCells; i++)
 			if (cells[i].resources > test)
@@ -75,7 +79,7 @@ int main()
 		for (int i = 0; i < numberOfCells && !cells[current].resources; i++)
 			if (cells[i].resources == test)
 				current = i;
-
+		cerr << cells[current].cellType << endl;
 		
 		cout << "LINE " << myBases[0] << ' ' << current << " 100" << endl;
 		
